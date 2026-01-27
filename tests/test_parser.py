@@ -5,7 +5,7 @@ Unit tests for JUnit XML parser
 import unittest
 import tempfile
 import os
-from junit_report_generator.parser import parse_junit_xml, parse_junit_xml_string
+from junit_html_report_generator.parser import parse_junit_xml, parse_junit_xml_string
 
 
 class TestJUnitParser(unittest.TestCase):
@@ -149,3 +149,4 @@ class TestJUnitParser(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
