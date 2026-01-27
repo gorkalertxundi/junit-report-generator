@@ -128,7 +128,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. **Verify the installation**
    ```bash
    # Check that the CLI is available
-  junit-html-report-generator --list-templates
+   junit-html-report-generator --list-templates
    
    # Verify templates are bundled correctly
    python -c "from junit_html_report_generator import get_available_templates; print(get_available_templates())"
@@ -156,11 +156,11 @@ All tests should pass before submitting a pull request.
 1. **Generate a test report**
    ```bash
    # Use the provided sample file
-  junit-html-report-generator sample-test-results.xml -o test-report.html
+   junit-html-report-generator sample-test-results.xml -o test-report.html
    
    # Try different templates
-  junit-html-report-generator sample-test-results.xml -o dark-report.html --template dark
-  junit-html-report-generator sample-test-results.xml -o minimal-report.html --template minimal
+   junit-html-report-generator sample-test-results.xml -o dark-report.html --template dark
+   junit-html-report-generator sample-test-results.xml -o minimal-report.html --template minimal
    ```
 
 2. **Test the Python API**
