@@ -1,8 +1,8 @@
 # JUnit Report Generator
 
-![PyPI - Version](https://img.shields.io/pypi/v/junit-report-generator) ![License](https://img.shields.io/pypi/l/junit-report-generator) ![Python Version](https://img.shields.io/pypi/pyversions/junit-report-generator)
+![PyPI - Version](https://img.shields.io/pypi/v/junit-html-report-generator) ![License](https://img.shields.io/pypi/l/junit-html-report-generator) ![Python Version](https://img.shields.io/pypi/pyversions/junit-html-report-generator)
 
-**junit-report-generator** is a lightweight, zero-dependency Python tool that converts JUnit XML test reports into human-readable, static HTML dashboards.
+**junit-html-report-generator** is a lightweight, zero-dependency Python tool that converts JUnit XML test reports into human-readable, static HTML dashboards.
 
 Perfect for CI/CD pipelines, local debugging, or sharing test results with stakeholders.
 
@@ -19,7 +19,7 @@ Perfect for CI/CD pipelines, local debugging, or sharing test results with stake
 Install the package via pip:
 
 ```bash
-pip install junit-report-generator
+pip install junit-html-report-generator
 ```
 
 ## 🛠 Usage
@@ -27,17 +27,17 @@ pip install junit-report-generator
 **Command Line Interface (CLI)**
 Basic conversion (uses default template):
 ```bash
-junit-report-generator report.xml -o output.html
+junit-html-report-generator report.xml -o output.html
 ```
 
 Using a specific template:
 ```bash
-junit-report-generator report.xml -o output.html --template dark
+junit-html-report-generator report.xml -o output.html --template dark
 ```
 
 List available templates:
 ```bash
-junit-report-generator --list-templates
+junit-html-report-generator --list-templates
 ```
 
 **Python Library**
@@ -109,8 +109,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/gorkalertxundi/junit-report-generator.git
-   cd junit-report-generator
+   git clone https://github.com/gorkalertxundi/junit-html-report-generator.git
+   cd junit-html-report-generator
    ```
 
 2. **Install in editable mode**
@@ -122,7 +122,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. **Verify the installation**
    ```bash
    # Check that the CLI is available
-  junit-report-generator --list-templates
+  junit-html-report-generator --list-templates
    
    # Verify templates are bundled correctly
    python -c "from junit_report_generator import get_available_templates; print(get_available_templates())"
@@ -150,11 +150,11 @@ All tests should pass before submitting a pull request.
 1. **Generate a test report**
    ```bash
    # Use the provided sample file
-  junit-report-generator sample-test-results.xml -o test-report.html
+  junit-html-report-generator sample-test-results.xml -o test-report.html
    
    # Try different templates
-  junit-report-generator sample-test-results.xml -o dark-report.html --template dark
-  junit-report-generator sample-test-results.xml -o minimal-report.html --template minimal
+  junit-html-report-generator sample-test-results.xml -o dark-report.html --template dark
+  junit-html-report-generator sample-test-results.xml -o minimal-report.html --template minimal
    ```
 
 2. **Test the Python API**
@@ -176,7 +176,7 @@ All tests should pass before submitting a pull request.
    python -m build
    
    # Check that templates are included
-  tar -tzf dist/junit-report-generator-*.tar.gz | grep templates
+  tar -tzf dist/junit-html-report-generator-*.tar.gz | grep templates
    ```
 
 ### Adding a New Template
@@ -202,3 +202,4 @@ All tests should pass before submitting a pull request.
 
 ## 📄 License
 Distributed under the MIT License. See LICENSE for more information.
+
