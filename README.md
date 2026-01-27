@@ -125,7 +125,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
   junit-html-report-generator --list-templates
    
    # Verify templates are bundled correctly
-   python -c "from junit_report_generator import get_available_templates; print(get_available_templates())"
+   python -c "from junit_html_report_generator import get_available_templates; print(get_available_templates())"
    ```
 
 ### Running Tests
@@ -159,7 +159,7 @@ All tests should pass before submitting a pull request.
 
 2. **Test the Python API**
    ```python
-   from junit_report_generator import create_report
+   from junit_html_report_generator import create_report
    
    # Test with file
    create_report(source="sample-test-results.xml", output="api-test.html")
@@ -176,12 +176,12 @@ All tests should pass before submitting a pull request.
    python -m build
    
    # Check that templates are included
-  tar -tzf dist/junit-html-report-generator-*.tar.gz | grep templates
+   tar -tzf dist/junit-html-report-generator-*.tar.gz | grep templates
    ```
 
 ### Adding a New Template
 
-1. Create your template file in `junit_report_generator/templates/yourtemplate.html`
+1. Create your template file in `junit_html_report_generator/templates/yourtemplate.html`
 2. Use Jinja2 syntax with these variables:
    - `{{ summary.total }}`, `{{ summary.passed }}`, `{{ summary.failed }}`, etc.
    - `{{ summary.pass_rate }}` for the percentage

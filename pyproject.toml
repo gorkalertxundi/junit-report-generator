@@ -32,7 +32,7 @@ dependencies = [
 ]
 
 [project.scripts]
-junit-html-report-generator = "junit_report_generator.cli:main"
+junit-html-report-generator = "junit_html_report_generator.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/gorkalertxundi/junit-html-report-generator"
@@ -41,8 +41,8 @@ Issues = "https://github.com/gorkalertxundi/junit-html-report-generator/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["junit_report_generator*"]
+include = ["junit_html_report_generator*"]
 
 [tool.setuptools.package-data]
-junit_report_generator = ["templates/*.html"]
+junit_html_report_generator = ["templates/*.html"]
 
