@@ -60,14 +60,40 @@ with open("results.xml", "r") as f:
 ```
 
 ## 🎨 Available Templates
+
 The package comes with several pre-built templates to customize your report style.
 
 | Template Name | Description | Best For |
-|---------------|-------------|----------|
+| :--- | :--- | :--- |
 | **modern** | (Default) A clean, colorful dashboard with charts and collapsible sections. | General use, stakeholder reports. |
 | **dark** | A high-contrast dark theme version of the modern dashboard. | Late-night debugging, dark-mode lovers. |
 | **minimal** | A text-heavy, high-density layout with no Javascript or charts. | Large test suites (10k+ tests), slow connections. |
 | **legacy** | A simple table view similar to older Jenkins reports. | Backward compatibility. |
+
+### 📸 Template Previews
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h4 align="center">Modern (Default)</h4>
+      <img src="https://github.com/user-attachments/assets/96f25880-369e-4f4d-b302-0a2b8fc761cc" alt="Modern Report" width="100%" />
+    </td>
+    <td width="50%" valign="top">
+      <h4 align="center">Modern Dark</h4>
+      <img src="https://github.com/user-attachments/assets/48b40f9b-d313-4c98-9aba-1f340f0b3436" alt="Dark Report" width="100%" />
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h4 align="center">Minimal</h4>
+      <img src="https://github.com/user-attachments/assets/ebd154fa-546c-4522-b7f1-38e16b959a20" alt="Minimal Report" width="100%" />
+    </td>
+    <td width="50%" valign="top">
+      <h4 align="center">Legacy</h4>
+      <img src="https://github.com/user-attachments/assets/1fc723a7-98da-44b2-864f-8b81b4158d65" alt="Legacy Report" width="100%" />
+    </td>
+  </tr>
+</table>
 
 ## 📊 Example Output
 The generated HTML report includes:
