@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Results - Legacy</title>
+    <style>
+        body {
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 11px;
+            margin: 20px;
+            background: #f0f0f0;
+        }
+        
+        .header {
+            background: #4a90e2;
+            color: white;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+        
+        .summary {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .summary h2 {
+            font-size: 14px;
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        
+        .summary table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .summary td {
+            padding: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .summary td:first-child {
+            font-weight: bold;
+            background: #f5f5f5;
+            width: 150px;
+        }
+        
+        .passed-count {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .failed-count {
+            color: #f44336;
+            font-weight: bold;
+        }
+        
+        .tests-table {
+            background: white;
+            border: 1px solid #ccc;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .tests-table th {
+            background: #4a90e2;
+            color: white;
+            text-align: left;
+            padding: 8px;
+            font-weight: bold;
+            border: 1px solid #357ab8;
+        }
+        
+        .tests-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .tests-table tr.passed {
+            background: #dff0d8;
+        }
+        
+        .tests-table tr.failed,
+        .tests-table tr.error {
+            background: #f2dede;
+        }
+        
+        .tests-table tr.skipped {
+            background: #fcf8e3;
+        }
+        
+        .status-icon {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .status-passed {
+            color: #4caf50;
+        }
+        
+        .status-failed,
+        .status-error {
+            color: #f44336;
+        }
+        
+        .status-skipped {
+            color: #ff9800;
+        }
+        
+        .error-details {
+            margin-top: 5px;
+            padding: 8px;
+            background: #fff;
+            border: 1px solid #f44336;
+            font-family: monospace;
+            font-size: 10px;
+            white-space: pre-wrap;
+        }
+        
+        .output-details {
+            margin-top: 5px;
+            padding: 8px;
+            background: #f9f9f9;
+            border: 1px solid #bbb;
+            font-family: monospace;
+            font-size: 10px;
+            white-space: pre-wrap;
+            max-height: 150px;
+            overflow: auto;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            padding: 10px;
+            background: white;
+            border: 1px solid #ccc;
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Test Results Report</h1>
+    </div>
+    
+    <div class="summary">
+        <h2>Summary</h2>
+        <table>
+            <tr>
+                <td>Total Tests</td>
+                <td>{{ summary.total }}</td>
+            </tr>
+            <tr>
+                <td>Tests Passed</td>
+                <td class="passed-count">{{ summary.passed }}</td>
+            </tr>
+            <tr>
+                <td>Tests Failed</td>
+                <td class="failed-count">{{ summary.failed }}</td>
+            </tr>
+            <tr>
+                <td>Tests with Errors</td>
+                <td class="failed-count">{{ summary.errors }}</td>
+            </tr>
+            <tr>
+                <td>Tests Skipped</td>
+                <td>{{ summary.skipped }}</td>
+            </tr>
+            <tr>
+                <td>Success Rate</td>
+                <td><strong>{{ summary.pass_rate }}%</strong></td>
+            </tr>
+            <tr>
+                <td>Total Time</td>
+                <td>{{ summary.time }} seconds</td>
+            </tr>
+        </table>
+    </div>
+    
+    <table class="tests-table">
+        <thead>
+            <tr>
+                <th style="width: 5%;">Status</th>
+                <th style="width: 35%;">Test Case</th>
+                <th style="width: 45%;">Class Name</th>
+                <th style="width: 10%;">Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for test in test_cases %}
+            <tr class="{{ test.status }}">
+                <td style="text-align: center;">
+                    {% if test.status == 'passed' %}
+                    <span class="status-icon status-passed">✓</span>
+                    {% elif test.status == 'failed' or test.status == 'error' %}
+                    <span class="status-icon status-failed">✗</span>
+                    {% elif test.status == 'skipped' %}
+                    <span class="status-icon status-skipped">⊘</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <strong>{{ test.name }}</strong>
+                    {% if test.message %}
+                    <div class="error-details">
+                        <strong>Error:</strong> {{ test.message }}
+                    </div>
+                    {% endif %}
+                    {% if test.output %}
+                    <div class="output-details">{{ test.output }}</div>
+                    {% endif %}
+                </td>
+                <td>{{ test.classname }}</td>
+                <td>{{ test.time }}s</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="footer">
+        Report generated by JUnit Report Generator
+    </div>
+</body>
+</html>

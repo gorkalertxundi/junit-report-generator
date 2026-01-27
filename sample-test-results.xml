@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="ExampleTestSuite" tests="5" failures="1" errors="1" skipped="1" time="2.345">
+        <testcase name="test_addition" classname="com.example.MathTest" time="0.123">
+        </testcase>
+        <testcase name="test_subtraction" classname="com.example.MathTest" time="0.234">
+        </testcase>
+        <testcase name="test_division" classname="com.example.MathTest" time="0.456">
+            <failure message="Division by zero">
+java.lang.ArithmeticException: / by zero
+    at com.example.MathTest.test_division(MathTest.java:25)
+            </failure>
+        </testcase>
+        <testcase name="test_multiplication" classname="com.example.MathTest" time="0.789">
+            <error message="NullPointerException">
+java.lang.NullPointerException: Cannot invoke method on null
+    at com.example.MathTest.test_multiplication(MathTest.java:35)
+            </error>
+        </testcase>
+        <testcase name="test_modulo" classname="com.example.MathTest" time="0.000">
+            <skipped message="Not implemented yet"/>
+        </testcase>
+    </testsuite>
+</testsuites>

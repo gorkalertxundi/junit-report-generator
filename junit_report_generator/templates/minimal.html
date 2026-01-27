@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Results - Minimal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            padding: 10px;
+            background: #fff;
+            color: #000;
+        }
+        
+        .container {
+            max-width: 100%;
+        }
+        
+        h1 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+        }
+        
+        .summary {
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background: #f5f5f5;
+        }
+        
+        .summary-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .summary-item {
+            display: inline-block;
+        }
+        
+        .summary-item strong {
+            font-weight: bold;
+        }
+        
+        .pass-rate {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #000;
+        }
+        
+        th {
+            background: #e0e0e0;
+            font-weight: bold;
+            text-align: left;
+            padding: 5px;
+            border: 1px solid #000;
+            font-size: 12px;
+        }
+        
+        td {
+            padding: 4px 5px;
+            border: 1px solid #ccc;
+            vertical-align: top;
+        }
+        
+        tr.passed {
+            background: #d4edda;
+        }
+        
+        tr.failed, tr.error {
+            background: #f8d7da;
+        }
+        
+        tr.skipped {
+            background: #f8f9fa;
+            color: #6c757d;
+        }
+        
+        .status {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+        
+        .status.passed {
+            color: #28a745;
+        }
+        
+        .status.failed, .status.error {
+            color: #dc3545;
+        }
+        
+        .status.skipped {
+            color: #6c757d;
+        }
+        
+        .error-message {
+            margin-top: 3px;
+            padding: 5px;
+            background: #fff;
+            border-left: 2px solid #dc3545;
+            font-family: monospace;
+            font-size: 11px;
+            white-space: pre-wrap;
+        }
+        
+        .test-output {
+            margin-top: 3px;
+            padding: 5px;
+            background: #f8f9fa;
+            border-left: 2px solid #007bff;
+            font-family: monospace;
+            font-size: 10px;
+            white-space: pre-wrap;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+        
+        footer {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            font-size: 10px;
+            color: #666;
+        }
+        
+        @media print {
+            .test-output {
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Results Report</h1>
+        
+        <div class="summary">
+            <div class="summary-row">
+                <div class="summary-item">
+                    <strong>Total:</strong> {{ summary.total }}
+                </div>
+                <div class="summary-item">
+                    <strong>Passed:</strong> <span style="color: #28a745;">{{ summary.passed }}</span>
+                </div>
+                <div class="summary-item">
+                    <strong>Failed:</strong> <span style="color: #dc3545;">{{ summary.failed }}</span>
+                </div>
+                <div class="summary-item">
+                    <strong>Errors:</strong> <span style="color: #dc3545;">{{ summary.errors }}</span>
+                </div>
+                <div class="summary-item">
+                    <strong>Skipped:</strong> {{ summary.skipped }}
+                </div>
+                <div class="summary-item">
+                    <strong>Time:</strong> {{ summary.time }}s
+                </div>
+            </div>
+            <div class="pass-rate">Pass Rate: {{ summary.pass_rate }}%</div>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 8%;">Status</th>
+                    <th style="width: 40%;">Test Name</th>
+                    <th style="width: 40%;">Class</th>
+                    <th style="width: 12%;">Time (s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for test in test_cases %}
+                <tr class="{{ test.status }}">
+                    <td>
+                        <span class="status {{ test.status }}">{{ test.status }}</span>
+                    </td>
+                    <td>
+                        {{ test.name }}
+                        {% if test.message %}
+                        <div class="error-message">{{ test.message }}</div>
+                        {% endif %}
+                        {% if test.output %}
+                        <div class="test-output">{{ test.output }}</div>
+                        {% endif %}
+                    </td>
+                    <td>{{ test.classname }}</td>
+                    <td>{{ test.time }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <footer>
+            Generated by JUnit Report Generator | {{ summary.total }} tests executed in {{ summary.time }}s
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Results Dashboard - Dark Mode</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .summary-card {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid;
+        }
+        
+        .summary-card.total {
+            border-left-color: #3b82f6;
+        }
+        
+        .summary-card.passed {
+            border-left-color: #10b981;
+        }
+        
+        .summary-card.failed {
+            border-left-color: #ef4444;
+        }
+        
+        .summary-card.errors {
+            border-left-color: #f59e0b;
+        }
+        
+        .summary-card.skipped {
+            border-left-color: #64748b;
+        }
+        
+        .summary-card h3 {
+            font-size: 0.9em;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+        }
+        
+        .summary-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #f1f5f9;
+        }
+        
+        .pass-rate {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        .pass-rate h3 {
+            color: #e2e8f0;
+        }
+        
+        .pass-rate-bar {
+            height: 30px;
+            background: #334155;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .pass-rate-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: width 0.5s ease;
+        }
+        
+        .test-results {
+            background: #1e293b;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .test-results h2 {
+            padding: 20px;
+            background: #0f172a;
+            border-bottom: 1px solid #334155;
+            color: #f1f5f9;
+        }
+        
+        .filters {
+            padding: 15px 20px;
+            background: #0f172a;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid #475569;
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+        
+        .filter-btn:hover {
+            background: #334155;
+        }
+        
+        .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background: #0f172a;
+            position: sticky;
+            top: 0;
+        }
+        
+        th {
+            text-align: left;
+            padding: 15px 20px;
+            font-weight: 600;
+            color: #94a3b8;
+            border-bottom: 2px solid #334155;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #334155;
+            color: #e2e8f0;
+        }
+        
+        tr.passed {
+            background: #064e3b;
+        }
+        
+        tr.failed, tr.error {
+            background: #7f1d1d;
+        }
+        
+        tr.skipped {
+            background: #1e293b;
+            opacity: 0.6;
+        }
+        
+        tr:hover {
+            background: #334155 !important;
+            opacity: 1 !important;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-badge.passed {
+            background: #10b981;
+            color: #ecfdf5;
+        }
+        
+        .status-badge.failed, .status-badge.error {
+            background: #ef4444;
+            color: #fef2f2;
+        }
+        
+        .status-badge.skipped {
+            background: #64748b;
+            color: #f1f5f9;
+        }
+        
+        .error-message {
+            margin-top: 8px;
+            padding: 10px;
+            background: #7f1d1d;
+            border-left: 3px solid #ef4444;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #fecaca;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .test-output {
+            margin-top: 8px;
+            padding: 10px;
+            background: #0f172a;
+            border-left: 3px solid #3b82f6;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: #cbd5e1;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .time {
+            color: #94a3b8;
+            font-size: 0.9em;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        
+        details summary {
+            cursor: pointer;
+            color: #60a5fa;
+            margin-top: 5px;
+        }
+        
+        details summary:hover {
+            color: #93c5fd;
+        }
+        
+        @media (max-width: 768px) {
+            .summary {
+                grid-template-columns: 1fr;
+            }
+            
+            table {
+                font-size: 0.9em;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌙 Test Results Dashboard</h1>
+            <p class="subtitle">Execution Time: {{ summary.time }}s</p>
+        </header>
+        
+        <div class="summary">
+            <div class="summary-card total">
+                <h3>Total Tests</h3>
+                <div class="value">{{ summary.total }}</div>
+            </div>
+            <div class="summary-card passed">
+                <h3>Passed</h3>
+                <div class="value">{{ summary.passed }}</div>
+            </div>
+            <div class="summary-card failed">
+                <h3>Failed</h3>
+                <div class="value">{{ summary.failed }}</div>
+            </div>
+            <div class="summary-card errors">
+                <h3>Errors</h3>
+                <div class="value">{{ summary.errors }}</div>
+            </div>
+            <div class="summary-card skipped">
+                <h3>Skipped</h3>
+                <div class="value">{{ summary.skipped }}</div>
+            </div>
+        </div>
+        
+        <div class="pass-rate">
+            <h3>Pass Rate: {{ summary.pass_rate }}%</h3>
+            <div class="pass-rate-bar">
+                <div class="pass-rate-fill" style="width: {{ summary.pass_rate }}%">
+                    {% if summary.pass_rate > 20 %}{{ summary.pass_rate }}%{% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-results">
+            <h2>📋 Test Cases</h2>
+            
+            <div class="filters">
+                <button class="filter-btn active" onclick="filterTests('all')">All ({{ summary.total }})</button>
+                <button class="filter-btn" onclick="filterTests('passed')">Passed ({{ summary.passed }})</button>
+                <button class="filter-btn" onclick="filterTests('failed')">Failed ({{ summary.failed + summary.errors }})</button>
+                <button class="filter-btn" onclick="filterTests('skipped')">Skipped ({{ summary.skipped }})</button>
+            </div>
+            
+            <table id="testTable">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Test Name</th>
+                        <th>Class</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for test in test_cases %}
+                    <tr class="{{ test.status }}" data-status="{{ test.status }}">
+                        <td>
+                            <span class="status-badge {{ test.status }}">{{ test.status }}</span>
+                        </td>
+                        <td>
+                            <strong>{{ test.name }}</strong>
+                            {% if test.message %}
+                            <div class="error-message">{{ test.message }}</div>
+                            {% endif %}
+                            {% if test.output %}
+                            <details>
+                                <summary>Show output</summary>
+                                <div class="test-output">{{ test.output }}</div>
+                            </details>
+                            {% endif %}
+                        </td>
+                        <td>{{ test.classname }}</td>
+                        <td class="time">{{ test.time }}s</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <footer>
+            Generated by JUnit Report Generator • {{ summary.total }} tests executed in {{ summary.time }}s
+        </footer>
+    </div>
+    
+    <script>
+        function filterTests(status) {
+            const rows = document.querySelectorAll('#testTable tbody tr');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update button states
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter rows
+            rows.forEach(row => {
+                if (status === 'all') {
+                    row.style.display = '';
+                } else if (status === 'failed') {
+                    row.style.display = (row.dataset.status === 'failed' || row.dataset.status === 'error') ? '' : 'none';
+                } else {
+                    row.style.display = row.dataset.status === status ? '' : 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
