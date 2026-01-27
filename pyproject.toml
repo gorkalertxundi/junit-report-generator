@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "junit-report-generator"
+version = "1.0.0"
+description = "Transform JUnit XML reports into clean, standalone HTML reports"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+authors = [
+    {name = "Gorka Alertxundi"}
+]
+keywords = ["junit", "xml", "html", "report", "testing", "ci", "cd"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Testing",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/gorkalertxundi/junit-report-generator"
+Repository = "https://github.com/gorkalertxundi/junit-report-generator"
+Issues = "https://github.com/gorkalertxundi/junit-report-generator/issues"
+
+[project.scripts]
+junit-report-generator = "junit_report_generator.cli:main"
+
+[tool.setuptools]
+packages = ["junit_report_generator", "junit_report_generator.templates"]
+
+[tool.setuptools.package-data]
+junit_report_generator = ["templates/*.html"]

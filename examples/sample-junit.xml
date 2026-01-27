@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="AuthenticationTests" tests="5" failures="1" errors="0" skipped="1" time="2.456" timestamp="2024-01-27T10:30:00">
+        <testcase name="test_login_success" classname="tests.test_auth.AuthenticationTests" time="0.523">
+        </testcase>
+        <testcase name="test_login_invalid_password" classname="tests.test_auth.AuthenticationTests" time="0.412">
+        </testcase>
+        <testcase name="test_login_nonexistent_user" classname="tests.test_auth.AuthenticationTests" time="0.389">
+            <failure message="AssertionError: Expected 404, got 500">
+Traceback (most recent call last):
+  File "tests/test_auth.py", line 45, in test_login_nonexistent_user
+    assert response.status_code == 404
+AssertionError: Expected 404, got 500
+            </failure>
+        </testcase>
+        <testcase name="test_logout" classname="tests.test_auth.AuthenticationTests" time="0.234">
+        </testcase>
+        <testcase name="test_token_refresh" classname="tests.test_auth.AuthenticationTests" time="0.898">
+            <skipped message="Feature not yet implemented"/>
+        </testcase>
+    </testsuite>
+    <testsuite name="DatabaseTests" tests="8" failures="0" errors="1" skipped="0" time="5.234" timestamp="2024-01-27T10:30:03">
+        <testcase name="test_connection" classname="tests.test_database.DatabaseTests" time="0.156">
+        </testcase>
+        <testcase name="test_query_users" classname="tests.test_database.DatabaseTests" time="0.789">
+        </testcase>
+        <testcase name="test_insert_user" classname="tests.test_database.DatabaseTests" time="0.923">
+        </testcase>
+        <testcase name="test_update_user" classname="tests.test_database.DatabaseTests" time="0.834">
+        </testcase>
+        <testcase name="test_delete_user" classname="tests.test_database.DatabaseTests" time="0.712">
+        </testcase>
+        <testcase name="test_transaction_rollback" classname="tests.test_database.DatabaseTests" time="1.234">
+            <error message="ConnectionError: Database connection lost">
+Traceback (most recent call last):
+  File "tests/test_database.py", line 89, in test_transaction_rollback
+    db.rollback()
+  File "database/connection.py", line 123, in rollback
+    raise ConnectionError("Database connection lost")
+ConnectionError: Database connection lost
+            </error>
+        </testcase>
+        <testcase name="test_migration" classname="tests.test_database.DatabaseTests" time="0.345">
+        </testcase>
+        <testcase name="test_indexes" classname="tests.test_database.DatabaseTests" time="0.241">
+        </testcase>
+    </testsuite>
+    <testsuite name="APITests" tests="12" failures="0" errors="0" skipped="0" time="3.123" timestamp="2024-01-27T10:30:08">
+        <testcase name="test_get_users" classname="tests.test_api.APITests" time="0.234">
+        </testcase>
+        <testcase name="test_get_user_by_id" classname="tests.test_api.APITests" time="0.198">
+        </testcase>
+        <testcase name="test_post_create_user" classname="tests.test_api.APITests" time="0.312">
+        </testcase>
+        <testcase name="test_put_update_user" classname="tests.test_api.APITests" time="0.289">
+        </testcase>
+        <testcase name="test_delete_user" classname="tests.test_api.APITests" time="0.267">
+        </testcase>
+        <testcase name="test_pagination" classname="tests.test_api.APITests" time="0.345">
+        </testcase>
+        <testcase name="test_filtering" classname="tests.test_api.APITests" time="0.278">
+        </testcase>
+        <testcase name="test_sorting" classname="tests.test_api.APITests" time="0.256">
+        </testcase>
+        <testcase name="test_rate_limiting" classname="tests.test_api.APITests" time="0.423">
+        </testcase>
+        <testcase name="test_authentication_required" classname="tests.test_api.APITests" time="0.189">
+        </testcase>
+        <testcase name="test_cors_headers" classname="tests.test_api.APITests" time="0.167">
+        </testcase>
+        <testcase name="test_content_type" classname="tests.test_api.APITests" time="0.165">
+        </testcase>
+    </testsuite>
+</testsuites>
