@@ -20,7 +20,7 @@ def main():
 Examples:
     junit-html-report-generator test-results.xml
     junit-html-report-generator test-results.xml -o my-report.html
-    junit-html-report-generator test-results.xml --template dark
+    junit-html-report-generator test-results.xml --template dark --title "Nightly Run"
     junit-html-report-generator --list-templates
         """
     )
@@ -41,6 +41,12 @@ Examples:
         "--template",
         default="modern",
         help="Template name to use (default: modern)"
+    )
+
+    parser.add_argument(
+        "--title",
+        default="Test Results Report",
+        help="Custom title for the report header"
     )
     
     parser.add_argument(
@@ -80,7 +86,7 @@ Examples:
         
         # Generate HTML report
         print(f"Generating HTML report using '{args.template}' template...")
-        html_content = generate_html(report_data, template_name=args.template)
+        html_content = generate_html(report_data, template_name=args.template, title=args.title)
         
         # Write to output file
         output_path = Path(args.output)

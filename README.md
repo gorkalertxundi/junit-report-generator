@@ -35,6 +35,11 @@ Using a specific template:
 junit-html-report-generator report.xml -o output.html --template dark
 ```
 
+Setting a custom title:
+```bash
+junit-html-report-generator report.xml -o output.html --template legacy --title "Nightly Run"
+```
+
 List available templates:
 ```bash
 junit-html-report-generator --list-templates
@@ -50,7 +55,8 @@ from junit_report_generator import create_report
 create_report(
     source="results.xml", 
     output="dashboard.html", 
-    template="dark"
+    template="dark",
+    title="Nightly Run"
 )
 
 # or using a string of XML data

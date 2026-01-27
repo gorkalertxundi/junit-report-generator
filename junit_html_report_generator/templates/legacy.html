@@ -29,6 +29,12 @@
             border: 1px solid #ccc;
             padding: 10px;
             margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        
+        .summary-content {
+            flex: 1;
         }
         
         .summary h2 {
@@ -61,6 +67,20 @@
         .failed-count {
             color: #f44336;
             font-weight: bold;
+        }
+        
+        .chart-container {
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chart-container h3 {
+            font-size: 12px;
+            margin: 0 0 10px 0;
+            color: #333;
         }
         
         .tests-table {
@@ -150,42 +170,144 @@
 </head>
 <body>
     <div class="header">
-        <h1>Test Results Report</h1>
+        <h1>{{ title or 'Test Results Report' }}</h1>
     </div>
     
     <div class="summary">
-        <h2>Summary</h2>
-        <table>
-            <tr>
-                <td>Total Tests</td>
-                <td>{{ summary.total }}</td>
-            </tr>
-            <tr>
-                <td>Tests Passed</td>
-                <td class="passed-count">{{ summary.passed }}</td>
-            </tr>
-            <tr>
-                <td>Tests Failed</td>
-                <td class="failed-count">{{ summary.failed }}</td>
-            </tr>
-            <tr>
-                <td>Tests with Errors</td>
-                <td class="failed-count">{{ summary.errors }}</td>
-            </tr>
-            <tr>
-                <td>Tests Skipped</td>
-                <td>{{ summary.skipped }}</td>
-            </tr>
-            <tr>
-                <td>Success Rate</td>
-                <td><strong>{{ summary.pass_rate }}%</strong></td>
-            </tr>
-            <tr>
-                <td>Total Time</td>
-                <td>{{ summary.time }} seconds</td>
-            </tr>
-        </table>
+        <div class="summary-content">
+            <h2>Summary</h2>
+            <table>
+                <tr>
+                    <td>Total Tests</td>
+                    <td>{{ summary.total }}</td>
+                </tr>
+                <tr>
+                    <td>Tests Passed</td>
+                    <td class="passed-count">{{ summary.passed }}</td>
+                </tr>
+                <tr>
+                    <td>Tests Failed</td>
+                    <td class="failed-count">{{ summary.failed }}</td>
+                </tr>
+                <tr>
+                    <td>Tests with Errors</td>
+                    <td class="failed-count">{{ summary.errors }}</td>
+                </tr>
+                <tr>
+                    <td>Tests Skipped</td>
+                    <td>{{ summary.skipped }}</td>
+                </tr>
+                <tr>
+                    <td>Success Rate</td>
+                    <td><strong>{{ summary.pass_rate }}%</strong></td>
+                </tr>
+                <tr>
+                    <td>Total Time</td>
+                    <td>{{ summary.time }} seconds</td>
+                </tr>
+            </table>
+        </div>
+        <div class="chart-container">
+            <h3>Test Results</h3>
+            <canvas id="resultsChart" width="200" height="200"></canvas>
+        </div>
     </div>
+    
+    <script>
+        // Simple pie chart drawing function
+        function drawPieChart(canvasId, data) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(centerX, centerY) - 10;
+            
+            const total = data.reduce((sum, item) => sum + item.value, 0);
+            let currentAngle = -Math.PI / 2;
+            
+            // Draw pie slices
+            data.forEach(item => {
+                if (item.value > 0) {
+                    const sliceAngle = (item.value / total) * 2 * Math.PI;
+                    
+                    ctx.beginPath();
+                    ctx.fillStyle = item.color;
+                    ctx.moveTo(centerX, centerY);
+                    ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
+                    ctx.closePath();
+                    ctx.fill();
+                    
+                    // Draw border
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    
+                    // Draw percentage label on slice
+                    const percentage = ((item.value / total) * 100).toFixed(1);
+                    if (parseFloat(percentage) > 5) { // Only show if slice is large enough
+                        const labelAngle = currentAngle + sliceAngle / 2;
+                        const labelRadius = radius * 0.7;
+                        const labelX = centerX + Math.cos(labelAngle) * labelRadius;
+                        const labelY = centerY + Math.sin(labelAngle) * labelRadius;
+                        
+                        ctx.fillStyle = '#fff';
+                        ctx.font = 'bold 12px Verdana';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        
+                        // Add text shadow for better readability
+                        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                        ctx.shadowBlur = 3;
+                        ctx.shadowOffsetX = 1;
+                        ctx.shadowOffsetY = 1;
+                        
+                        ctx.fillText(percentage + '%', labelX, labelY);
+                        
+                        // Reset shadow
+                        ctx.shadowColor = 'transparent';
+                        ctx.shadowBlur = 0;
+                        ctx.shadowOffsetX = 0;
+                        ctx.shadowOffsetY = 0;
+                    }
+                    
+                    currentAngle += sliceAngle;
+                }
+            });
+            
+            // Draw legend
+            const legendX = 10;
+            let legendY = canvas.height + 10;
+            
+            data.forEach(item => {
+                if (item.value > 0) {
+                    const percentage = ((item.value / total) * 100).toFixed(1);
+                    
+                    // Draw color box
+                    ctx.fillStyle = item.color;
+                    ctx.fillRect(legendX, legendY, 12, 12);
+                    ctx.strokeStyle = '#333';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(legendX, legendY, 12, 12);
+                    
+                    // Draw label
+                    ctx.fillStyle = '#333';
+                    ctx.font = '11px Verdana';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(`${item.label}: ${item.value} (${percentage}%)`, legendX + 18, legendY + 10);
+                    
+                    legendY += 20;
+                }
+            });
+        }
+        
+        // Draw the chart
+        drawPieChart('resultsChart', [
+            { label: 'Passed', value: {{ summary.passed }}, color: '#4caf50' },
+            { label: 'Failed', value: {{ summary.failed }}, color: '#f44336' },
+            { label: 'Errors', value: {{ summary.errors }}, color: '#ff5722' },
+            { label: 'Skipped', value: {{ summary.skipped }}, color: '#ff9800' }
+        ]);
+    </script>
     
     <table class="tests-table">
         <thead>

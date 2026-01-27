@@ -24,7 +24,7 @@ def get_available_templates() -> List[str]:
     return [t.replace(".html", "") for t in templates if t.endswith(".html") and not t.startswith("__")]
 
 
-def generate_html(report_data: Dict[str, Any], template_name: str = "modern") -> str:
+def generate_html(report_data: Dict[str, Any], template_name: str = "modern", title: str = "Test Results Report") -> str:
     """
     Generate an HTML report from parsed JUnit data.
     
@@ -60,7 +60,8 @@ def generate_html(report_data: Dict[str, Any], template_name: str = "modern") ->
     # Render the template
     html_content = template.render(
         summary=summary,
-        test_cases=report_data["test_cases"]
+        test_cases=report_data["test_cases"],
+        title=title
     )
     
     return html_content

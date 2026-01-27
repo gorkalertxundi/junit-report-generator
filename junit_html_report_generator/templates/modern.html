@@ -91,6 +91,12 @@
             font-weight: bold;
             color: #2d3748;
         }
+
+        .summary-card .subvalue {
+            margin-top: 4px;
+            font-size: 0.9em;
+            color: #718096;
+        }
         
         .pass-rate {
             background: white;
@@ -286,31 +292,36 @@
 <body>
     <div class="container">
         <header>
-            <h1>🧪 Test Results Dashboard</h1>
+            <h1>{{ title or 'Test Results Dashboard' }}</h1>
             <p class="subtitle">Execution Time: {{ summary.time }}s</p>
         </header>
         
         <div class="summary">
-            <div class="summary-card total">
-                <h3>Total Tests</h3>
-                <div class="value">{{ summary.total }}</div>
-            </div>
-            <div class="summary-card passed">
-                <h3>Passed</h3>
-                <div class="value">{{ summary.passed }}</div>
-            </div>
-            <div class="summary-card failed">
-                <h3>Failed</h3>
-                <div class="value">{{ summary.failed }}</div>
-            </div>
-            <div class="summary-card errors">
-                <h3>Errors</h3>
-                <div class="value">{{ summary.errors }}</div>
-            </div>
-            <div class="summary-card skipped">
-                <h3>Skipped</h3>
-                <div class="value">{{ summary.skipped }}</div>
-            </div>
+                <div class="summary-card total">
+                    <h3>Total Tests</h3>
+                    <div class="value">{{ summary.total }}</div>
+                    <div class="subvalue">100%</div>
+                </div>
+                <div class="summary-card passed">
+                    <h3>Passed</h3>
+                    <div class="value">{{ summary.passed }}</div>
+                    <div class="subvalue">{% if summary.total > 0 %}{{ (summary.passed / summary.total * 100)|round(1) }}%{% else %}0%{% endif %}</div>
+                </div>
+                <div class="summary-card failed">
+                    <h3>Failed</h3>
+                    <div class="value">{{ summary.failed }}</div>
+                    <div class="subvalue">{% if summary.total > 0 %}{{ (summary.failed / summary.total * 100)|round(1) }}%{% else %}0%{% endif %}</div>
+                </div>
+                <div class="summary-card errors">
+                    <h3>Errors</h3>
+                    <div class="value">{{ summary.errors }}</div>
+                    <div class="subvalue">{% if summary.total > 0 %}{{ (summary.errors / summary.total * 100)|round(1) }}%{% else %}0%{% endif %}</div>
+                </div>
+                <div class="summary-card skipped">
+                    <h3>Skipped</h3>
+                    <div class="value">{{ summary.skipped }}</div>
+                    <div class="subvalue">{% if summary.total > 0 %}{{ (summary.skipped / summary.total * 100)|round(1) }}%{% else %}0%{% endif %}</div>
+                </div>
         </div>
         
         <div class="pass-rate">
