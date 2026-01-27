@@ -82,21 +82,21 @@ The package comes with several pre-built templates to customize your report styl
   <tr>
     <td width="50%" valign="top">
       <h4 align="center">Modern (Default)</h4>
-      <img src="https://github.com/user-attachments/assets/96f25880-369e-4f4d-b302-0a2b8fc761cc" alt="Modern Report" width="100%" />
+      <img src="https://github.com/user-attachments/assets/34ca8100-474c-4d16-a526-b3601fffdc04" alt="Modern Report" width="100%" />
     </td>
     <td width="50%" valign="top">
       <h4 align="center">Modern Dark</h4>
-      <img src="https://github.com/user-attachments/assets/48b40f9b-d313-4c98-9aba-1f340f0b3436" alt="Dark Report" width="100%" />
+      <img src="https://github.com/user-attachments/assets/29ff73b9-7e66-491f-9333-2f71c0ef35dc" alt="Dark Report" width="100%" />
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
       <h4 align="center">Minimal</h4>
-      <img src="https://github.com/user-attachments/assets/ebd154fa-546c-4522-b7f1-38e16b959a20" alt="Minimal Report" width="100%" />
+      <img src="https://github.com/user-attachments/assets/8d3acc33-be63-41c7-92ce-def70d68ee89" alt="Minimal Report" width="100%" />
     </td>
     <td width="50%" valign="top">
       <h4 align="center">Legacy</h4>
-      <img src="https://github.com/user-attachments/assets/1fc723a7-98da-44b2-864f-8b81b4158d65" alt="Legacy Report" width="100%" />
+      <img src="https://github.com/user-attachments/assets/f6e39403-d864-4c58-bcad-1f7c537b9189" alt="Legacy Report" width="100%" />
     </td>
   </tr>
 </table>
