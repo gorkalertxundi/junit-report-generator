@@ -16,15 +16,34 @@ Perfect for CI/CD pipelines, local debugging, or sharing test results with stake
 
 ## 📦 Installation
 
+### Via pip (Python Package)
+
 Install the package via pip:
 
 ```bash
 pip install junit-html-report-generator
 ```
 
+### Via Docker
+
+Pull the Docker image from GitHub Container Registry:
+
+```bash
+docker pull ghcr.io/gorkalertxundi/junit-report-generator:latest
+```
+
+Available tags:
+- `latest` - Latest stable release
+- `1.2.3` - Specific version (replace with desired version)
+- `1.2` - Latest patch version in 1.2.x
+- `1` - Latest minor/patch version in 1.x
+
 ## 🛠 Usage
 
-**Command Line Interface (CLI)**
+### Command Line Interface (CLI)
+
+**Using Python Package:**
+
 Basic conversion (uses default template):
 ```bash
 junit-html-report-generator report.xml -o output.html
@@ -45,7 +64,31 @@ List available templates:
 junit-html-report-generator --list-templates
 ```
 
-**Python Library**
+**Using Docker:**
+
+Basic conversion:
+```bash
+docker run --rm -v $(pwd):/workspace ghcr.io/gorkalertxundi/junit-report-generator:latest \
+  /workspace/report.xml -o /workspace/output.html
+```
+
+Using a specific template:
+```bash
+docker run --rm -v $(pwd):/workspace ghcr.io/gorkalertxundi/junit-report-generator:latest \
+  /workspace/report.xml -o /workspace/output.html --template dark
+```
+
+List available templates:
+```bash
+docker run --rm ghcr.io/gorkalertxundi/junit-report-generator:latest --list-templates
+```
+
+**Windows (PowerShell):**
+```powershell
+docker run --rm -v ${PWD}:/workspace ghcr.io/gorkalertxundi/junit-report-generator:latest /workspace/report.xml -o /workspace/output.html
+```
+
+### Python Library
 You can integrate the generator directly into your Python scripts.
 
 ```python
@@ -107,6 +150,102 @@ The generated HTML report includes:
 - Summary Cards: Total tests, passed, failed, skipped, and total duration.
 - Test Cases Table: Sortable list of all test cases with status indicators.
 - Failure Details: Expandable sections showing stack traces and error messages.
+
+## 🔄 CI/CD Integration
+
+### GitHub Actions
+
+```yaml
+- name: Generate Test Report
+  run: |
+    pip install junit-html-report-generator
+    junit-html-report-generator test-results.xml -o test-report.html --template dark
+    
+- name: Upload Report
+  uses: actions/upload-artifact@v3
+  with:
+    name: test-report
+    path: test-report.html
+
+# Or using Docker
+- name: Generate Test Report (Docker)
+  run: |
+    docker run --rm -v ${{ github.workspace }}:/workspace \
+      ghcr.io/gorkalertxundi/junit-report-generator:latest \
+      /workspace/test-results.xml -o /workspace/test-report.html --template modern
+```
+
+### Jenkins
+
+```groovy
+stage('Generate Report') {
+    steps {
+        sh 'pip install junit-html-report-generator'
+        sh 'junit-html-report-generator build/test-results/test/*.xml -o reports/test-report.html'
+        publishHTML(target: [
+            reportDir: 'reports',
+            reportFiles: 'test-report.html',
+            reportName: 'Test Report'
+        ])
+    }
+}
+```
+
+### GitLab CI
+
+```yaml
+test:
+  script:
+    - pip install junit-html-report-generator
+    - junit-html-report-generator test-results.xml -o public/test-report.html --template minimal
+  artifacts:
+    paths:
+      - public/test-report.html
+```
+
+### CircleCI
+
+```yaml
+- run:
+    name: Generate Test Report
+    command: |
+      pip install junit-html-report-generator
+      junit-html-report-generator test-results.xml -o test-report.html
+      
+- store_artifacts:
+    path: test-report.html
+```
+
+### Bitbucket Pipelines
+
+**YAML Definition**
+
+Add the following snippet to the script section of your `bitbucket-pipelines.yml` file:
+
+```yaml
+- pipe: docker://ghcr.io/gorkalertxundi/junit-report-generator:latest
+  variables:
+    INPUT_FILE: 'target/reports/test-results.xml'
+    OUTPUT_FILE: 'target/reports/test-report.html'
+    # TEMPLATE: 'dark'  # Optional: modern (default), dark, minimal, legacy
+```
+
+**Complete Example:**
+
+```yaml
+pipelines:
+  default:
+    - step:
+        name: Build and Test
+        script:
+          - mvn test  # or your test command
+          - pipe: docker://ghcr.io/gorkalertxundi/junit-report-generator:latest
+            variables:
+              INPUT_FILE: 'target/reports/test_results.xml'
+              OUTPUT_FILE: 'target/reports/test_results.html'
+              TEMPLATE: 'dark'
+        artifacts:
+          - target/reports/test_results.html
 
 ## 🤝 Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
