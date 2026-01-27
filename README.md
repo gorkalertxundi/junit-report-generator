@@ -27,17 +27,17 @@ pip install junit-report-generator
 **Command Line Interface (CLI)**
 Basic conversion (uses default template):
 ```bash
-junit2html report.xml -o output.html
+junit-report-generator report.xml -o output.html
 ```
 
 Using a specific template:
 ```bash
-junit2html report.xml -o output.html --template dark
+junit-report-generator report.xml -o output.html --template dark
 ```
 
 List available templates:
 ```bash
-junit2html --list-templates
+junit-report-generator --list-templates
 ```
 
 **Python Library**
@@ -122,7 +122,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. **Verify the installation**
    ```bash
    # Check that the CLI is available
-   junit2html --list-templates
+  junit-report-generator --list-templates
    
    # Verify templates are bundled correctly
    python -c "from junit_report_generator import get_available_templates; print(get_available_templates())"
@@ -150,11 +150,11 @@ All tests should pass before submitting a pull request.
 1. **Generate a test report**
    ```bash
    # Use the provided sample file
-   junit2html sample-test-results.xml -o test-report.html
+  junit-report-generator sample-test-results.xml -o test-report.html
    
    # Try different templates
-   junit2html sample-test-results.xml -o dark-report.html --template dark
-   junit2html sample-test-results.xml -o minimal-report.html --template minimal
+  junit-report-generator sample-test-results.xml -o dark-report.html --template dark
+  junit-report-generator sample-test-results.xml -o minimal-report.html --template minimal
    ```
 
 2. **Test the Python API**
@@ -176,7 +176,7 @@ All tests should pass before submitting a pull request.
    python -m build
    
    # Check that templates are included
-   tar -tzf dist/junit-report-generator-*.tar.gz | grep templates
+  tar -tzf dist/junit-report-generator-*.tar.gz | grep templates
    ```
 
 ### Adding a New Template

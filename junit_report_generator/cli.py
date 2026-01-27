@@ -11,17 +11,17 @@ from .generator import generate_html, get_available_templates
 
 def main():
     """
-    Main entry point for the junit2html command-line tool.
+    Main entry point for the junit-report-generator command-line tool.
     """
     parser = argparse.ArgumentParser(
         description="Convert JUnit XML test results to HTML dashboard",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  junit2html test-results.xml
-  junit2html test-results.xml -o my-report.html
-  junit2html test-results.xml --template dark
-  junit2html --list-templates
+    junit-report-generator test-results.xml
+    junit-report-generator test-results.xml -o my-report.html
+    junit-report-generator test-results.xml --template dark
+    junit-report-generator --list-templates
         """
     )
     

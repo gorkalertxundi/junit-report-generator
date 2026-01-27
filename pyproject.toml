@@ -32,7 +32,7 @@ dependencies = [
 ]
 
 [project.scripts]
-junit2html = "junit_report_generator.cli:main"
+junit-report-generator = "junit_report_generator.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/gorkalertxundi/junit-report-generator"
