@@ -145,8 +145,30 @@
             background: #f7fafc;
             border-bottom: 1px solid #e2e8f0;
             display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .filter-buttons {
+            display: flex;
             gap: 10px;
             flex-wrap: wrap;
+        }
+        
+        .search-box {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 5px;
+            font-size: 0.9em;
+            width: 250px;
+            transition: border-color 0.2s;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         
         .filter-btn {
@@ -267,6 +289,59 @@
             font-size: 0.9em;
         }
         
+        .test-class {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .class-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            user-select: none;
+            transition: background 0.2s;
+        }
+        
+        .class-header:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6a3f93 100%);
+        }
+        
+        .toggle-icon {
+            display: inline-block;
+            margin-right: 10px;
+            transition: transform 0.2s;
+            font-size: 0.8em;
+        }
+        
+        .class-header.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+        
+        .class-summary {
+            margin-left: auto;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .class-table {
+            width: 100%;
+            background: white;
+        }
+        
+        .class-table thead tr {
+            background: #f7fafc;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .class-table tbody tr:last-child {
+            border-bottom: none;
+        }
+        
         footer {
             text-align: center;
             padding: 30px;
@@ -337,45 +412,65 @@
             <h2>📋 Test Cases</h2>
             
             <div class="filters">
-                <button class="filter-btn active" onclick="filterTests('all')">All ({{ summary.total }})</button>
-                <button class="filter-btn" onclick="filterTests('passed')">Passed ({{ summary.passed }})</button>
-                <button class="filter-btn" onclick="filterTests('failed')">Failed ({{ summary.failed + summary.errors }})</button>
-                <button class="filter-btn" onclick="filterTests('skipped')">Skipped ({{ summary.skipped }})</button>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterTests('all')">All ({{ summary.total }})</button>
+                    <button class="filter-btn" onclick="filterTests('passed')">Passed ({{ summary.passed }})</button>
+                    <button class="filter-btn" onclick="filterTests('failed')">Failed ({{ summary.failed + summary.errors }})</button>
+                    <button class="filter-btn" onclick="filterTests('skipped')">Skipped ({{ summary.skipped }})</button>
+                </div>
+                <input type="text" id="searchInput" class="search-box" placeholder="Search by class or test name..." onkeyup="searchTests()">
             </div>
             
-            <table id="testTable">
-                <thead>
-                    <tr>
-                        <th>Status</th>
-                        <th>Test Name</th>
-                        <th>Class</th>
-                        <th>Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for test in test_cases %}
-                    <tr class="{{ test.status }}" data-status="{{ test.status }}">
-                        <td>
-                            <span class="status-badge {{ test.status }}">{{ test.status }}</span>
-                        </td>
-                        <td>
-                            <strong>{{ test.name }}</strong>
-                            {% if test.message %}
-                            <div class="error-message">{{ test.message }}</div>
-                            {% endif %}
-                            {% if test.output %}
-                            <details>
-                                <summary style="cursor: pointer; color: #4299e1; margin-top: 5px;">Show output</summary>
-                                <div class="test-output">{{ test.output }}</div>
-                            </details>
-                            {% endif %}
-                        </td>
-                        <td>{{ test.classname }}</td>
-                        <td class="time">{{ test.time }}s</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            {% set classes = {} %}
+            {% for test in test_cases %}
+                {% if test.classname not in classes %}
+                    {% set _ = classes.update({test.classname: []}) %}
+                {% endif %}
+                {% set _ = classes[test.classname].append(test) %}
+            {% endfor %}
+            
+            {% for classname in classes|sort %}
+            <div class="test-class">
+                <div class="class-header" onclick="toggleClass(this)">
+                    <span class="toggle-icon">▼</span>
+                    <strong>{{ classname }}</strong>
+                    <span class="class-summary">
+                        ({{ classes[classname]|length }} tests)
+                    </span>
+                </div>
+                <table class="class-table">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Test Name</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for test in classes[classname] %}
+                        <tr class="{{ test.status }}" data-status="{{ test.status }}">
+                            <td>
+                                <span class="status-badge {{ test.status }}">{{ test.status }}</span>
+                            </td>
+                            <td>
+                                <strong>{{ test.name }}</strong>
+                                {% if test.message %}
+                                <div class="error-message">{{ test.message }}</div>
+                                {% endif %}
+                                {% if test.output %}
+                                <details>
+                                    <summary style="cursor: pointer; color: #4299e1; margin-top: 5px;">Show output</summary>
+                                    <div class="test-output">{{ test.output }}</div>
+                                </details>
+                                {% endif %}
+                            </td>
+                            <td class="time">{{ test.time }}s</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
         </div>
         
         <footer>
@@ -384,24 +479,59 @@
     </div>
     
     <script>
+        let currentStatusFilter = 'all';
+        
+        function toggleClass(headerElement) {
+            const classDiv = headerElement.closest('.test-class');
+            const table = classDiv.querySelector('.class-table');
+            
+            headerElement.classList.toggle('collapsed');
+            table.style.display = headerElement.classList.contains('collapsed') ? 'none' : '';
+        }
+        
+        function searchTests() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const classGroups = document.querySelectorAll('.test-class');
+            
+            classGroups.forEach(classDiv => {
+                const classHeader = classDiv.querySelector('.class-header strong');
+                const className = classHeader.textContent.toLowerCase();
+                const rows = classDiv.querySelectorAll('.class-table tbody tr');
+                let visibleCount = 0;
+                
+                rows.forEach(row => {
+                    const testName = row.querySelector('strong').textContent.toLowerCase();
+                    const matchesSearch = className.includes(searchInput) || testName.includes(searchInput);
+                    
+                    if (currentStatusFilter === 'all') {
+                        row.style.display = matchesSearch ? '' : 'none';
+                        if (matchesSearch) visibleCount++;
+                    } else if (currentStatusFilter === 'failed') {
+                        const matchesStatus = row.dataset.status === 'failed' || row.dataset.status === 'error';
+                        row.style.display = (matchesStatus && matchesSearch) ? '' : 'none';
+                        if (matchesStatus && matchesSearch) visibleCount++;
+                    } else {
+                        const matchesStatus = row.dataset.status === currentStatusFilter;
+                        row.style.display = (matchesStatus && matchesSearch) ? '' : 'none';
+                        if (matchesStatus && matchesSearch) visibleCount++;
+                    }
+                });
+                
+                classDiv.style.display = visibleCount > 0 ? '' : 'none';
+            });
+        }
+        
         function filterTests(status) {
-            const rows = document.querySelectorAll('#testTable tbody tr');
+            currentStatusFilter = status;
+            const classGroups = document.querySelectorAll('.test-class');
             const buttons = document.querySelectorAll('.filter-btn');
             
             // Update button states
             buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Filter rows
-            rows.forEach(row => {
-                if (status === 'all') {
-                    row.style.display = '';
-                } else if (status === 'failed') {
-                    row.style.display = (row.dataset.status === 'failed' || row.dataset.status === 'error') ? '' : 'none';
-                } else {
-                    row.style.display = row.dataset.status === status ? '' : 'none';
-                }
-            });
+            // Apply both status filter and search
+            searchTests();
         }
     </script>
 </body>
