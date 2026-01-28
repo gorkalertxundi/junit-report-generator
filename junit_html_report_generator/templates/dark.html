@@ -104,30 +104,43 @@
             border-radius: 10px;
             margin-bottom: 30px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
-        
-        .pass-rate h3 {
-            color: #e2e8f0;
         }
         
         .pass-rate-bar {
-            height: 30px;
-            background: #334155;
-            border-radius: 15px;
+            display: flex;
+            gap: 0;
+            height: 40px;
+            border-radius: 8px;
             overflow: hidden;
-            margin-top: 10px;
+            background: #334155;
         }
         
-        .pass-rate-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+        .pass-rate-segment {
+            flex: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-weight: bold;
-            transition: width 0.5s ease;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: flex 0.3s ease;
+            min-width: 40px;
+        }
+        
+        .pass-rate-segment.passed {
+            background: #10b981;
+        }
+        
+        .pass-rate-segment.failed {
+            background: #ef4444;
+        }
+        
+        .pass-rate-segment.error {
+            background: #f59e0b;
+        }
+        
+        .pass-rate-segment.skipped {
+            background: #64748b;
         }
         
         .test-results {
@@ -451,11 +464,11 @@
         </div>
         
         <div class="pass-rate">
-            <h3>Pass Rate: {{ summary.pass_rate }}%</h3>
             <div class="pass-rate-bar">
-                <div class="pass-rate-fill" style="width: {{ summary.pass_rate }}%">
-                    {% if summary.pass_rate > 20 %}{{ summary.pass_rate }}%{% endif %}
-                </div>
+                {% if summary.passed > 0 %}<div class="pass-rate-segment passed" style="flex: {{ summary.passed }}">{{ summary.passed }} Passed</div>{% endif %}
+                {% if summary.failed > 0 %}<div class="pass-rate-segment failed" style="flex: {{ summary.failed }}">{{ summary.failed }} Failed</div>{% endif %}
+                {% if summary.errors > 0 %}<div class="pass-rate-segment error" style="flex: {{ summary.errors }}">{{ summary.errors }} Errors</div>{% endif %}
+                {% if summary.skipped > 0 %}<div class="pass-rate-segment skipped" style="flex: {{ summary.skipped }}">{{ summary.skipped }} Skipped</div>{% endif %}
             </div>
         </div>
         
