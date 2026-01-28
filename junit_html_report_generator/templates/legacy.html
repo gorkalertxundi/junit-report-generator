@@ -228,6 +228,38 @@
             font-weight: normal;
         }
         
+        .class-status-bar {
+            display: flex;
+            gap: 0;
+            height: 5px;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-left: 15px;
+            min-width: 80px;
+            background: #ddd;
+        }
+        
+        .status-segment {
+            flex: 0;
+            transition: flex 0.3s ease;
+        }
+        
+        .status-segment.passed {
+            background: #4caf50;
+        }
+        
+        .status-segment.failed {
+            background: #f44336;
+        }
+        
+        .status-segment.error {
+            background: #ff9800;
+        }
+        
+        .status-segment.skipped {
+            background: #9e9e9e;
+        }
+        
         .class-table {
             width: 100%;
             border-collapse: collapse;
@@ -406,6 +438,17 @@
             <span class="class-summary">
                 ({{ classes[classname]|length }} tests)
             </span>
+            {% set class_tests = classes[classname] %}
+            {% set passed = class_tests|selectattr('status', 'equalto', 'passed')|list|length %}
+            {% set failed = class_tests|selectattr('status', 'equalto', 'failed')|list|length %}
+            {% set errors = class_tests|selectattr('status', 'equalto', 'error')|list|length %}
+            {% set skipped = class_tests|selectattr('status', 'equalto', 'skipped')|list|length %}
+            <div class="class-status-bar">
+                {% if passed > 0 %}<div class="status-segment passed" style="flex: {{ passed }}"></div>{% endif %}
+                {% if failed > 0 %}<div class="status-segment failed" style="flex: {{ failed }}"></div>{% endif %}
+                {% if errors > 0 %}<div class="status-segment error" style="flex: {{ errors }}"></div>{% endif %}
+                {% if skipped > 0 %}<div class="status-segment skipped" style="flex: {{ skipped }}"></div>{% endif %}
+            </div>
         </div>
         <table class="class-table tests-table">
             <thead>
