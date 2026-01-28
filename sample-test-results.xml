@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-    <testsuite name="ExampleTestSuite" tests="5" failures="1" errors="1" skipped="1" time="2.345">
+    <testsuite name="MathTestSuite" tests="8" failures="1" errors="1" skipped="1" time="3.456">
         <testcase name="test_addition" classname="com.example.MathTest" time="0.123">
         </testcase>
         <testcase name="test_subtraction" classname="com.example.MathTest" time="0.234">
@@ -17,8 +17,105 @@ java.lang.NullPointerException: Cannot invoke method on null
     at com.example.MathTest.test_multiplication(MathTest.java:35)
             </error>
         </testcase>
-        <testcase name="test_modulo" classname="com.example.MathTest" time="0.000">
+        <testcase name="test_modulo" classname="com.example.MathTest" time="0.043">
             <skipped message="Not implemented yet"/>
+        </testcase>
+        <testcase name="test_power" classname="com.example.MathTest" time="0.178">
+        </testcase>
+        <testcase name="test_sqrt" classname="com.example.MathTest" time="0.234">
+        </testcase>
+        <testcase name="test_factorial" classname="com.example.MathTest" time="0.399">
+        </testcase>
+    </testsuite>
+    
+    <testsuite name="StringTestSuite" tests="6" failures="0" errors="0" skipped="0" time="1.234">
+        <testcase name="test_concat" classname="com.example.StringTest" time="0.089">
+        </testcase>
+        <testcase name="test_trim" classname="com.example.StringTest" time="0.145">
+        </testcase>
+        <testcase name="test_uppercase" classname="com.example.StringTest" time="0.156">
+        </testcase>
+        <testcase name="test_lowercase" classname="com.example.StringTest" time="0.167">
+        </testcase>
+        <testcase name="test_contains" classname="com.example.StringTest" time="0.345">
+        </testcase>
+        <testcase name="test_replace" classname="com.example.StringTest" time="0.332">
+        </testcase>
+    </testsuite>
+    
+    <testsuite name="ArrayTestSuite" tests="7" failures="1" errors="0" skipped="1" time="2.145">
+        <testcase name="test_sort" classname="com.example.ArrayTest" time="0.567">
+        </testcase>
+        <testcase name="test_reverse" classname="com.example.ArrayTest" time="0.234">
+        </testcase>
+        <testcase name="test_find" classname="com.example.ArrayTest" time="0.289">
+        </testcase>
+        <testcase name="test_filter" classname="com.example.ArrayTest" time="0.345">
+            <failure message="Filter logic incorrect">
+Expected array [1, 3, 5] but got [1, 2, 3]
+    at com.example.ArrayTest.test_filter(ArrayTest.java:45)
+            </failure>
+        </testcase>
+        <testcase name="test_map" classname="com.example.ArrayTest" time="0.456">
+        </testcase>
+        <testcase name="test_reduce" classname="com.example.ArrayTest" time="0.123">
+            <skipped message="Pending implementation"/>
+        </testcase>
+        <testcase name="test_unique" classname="com.example.ArrayTest" time="0.131">
+        </testcase>
+    </testsuite>
+    
+    <testsuite name="FileIOTestSuite" tests="5" failures="0" errors="1" skipped="0" time="1.876">
+        <testcase name="test_read_file" classname="com.example.FileIOTest" time="0.456">
+        </testcase>
+        <testcase name="test_write_file" classname="com.example.FileIOTest" time="0.234">
+        </testcase>
+        <testcase name="test_append_file" classname="com.example.FileIOTest" time="0.345">
+        </testcase>
+        <testcase name="test_delete_file" classname="com.example.FileIOTest" time="0.567">
+            <error message="File permission denied">
+java.io.IOException: Permission denied
+    at com.example.FileIOTest.test_delete_file(FileIOTest.java:67)
+            </error>
+        </testcase>
+        <testcase name="test_exists_file" classname="com.example.FileIOTest" time="0.274">
+        </testcase>
+    </testsuite>
+    
+    <testsuite name="DatabaseTestSuite" tests="6" failures="1" errors="0" skipped="1" time="4.567">
+        <testcase name="test_connect" classname="com.example.DatabaseTest" time="0.789">
+        </testcase>
+        <testcase name="test_select" classname="com.example.DatabaseTest" time="0.567">
+        </testcase>
+        <testcase name="test_insert" classname="com.example.DatabaseTest" time="0.456">
+            <failure message="Duplicate key error">
+SQL Error: Duplicate entry 'test123' for key 'PRIMARY'
+    at com.example.DatabaseTest.test_insert(DatabaseTest.java:34)
+            </failure>
+        </testcase>
+        <testcase name="test_update" classname="com.example.DatabaseTest" time="0.678">
+        </testcase>
+        <testcase name="test_delete" classname="com.example.DatabaseTest" time="0.834">
+        </testcase>
+        <testcase name="test_transaction" classname="com.example.DatabaseTest" time="0.243">
+            <skipped message="Integration test disabled for CI"/>
+        </testcase>
+    </testsuite>
+    
+    <testsuite name="APITestSuite" tests="5" failures="0" errors="1" skipped="0" time="2.234">
+        <testcase name="test_get_request" classname="com.example.APITest" time="0.456">
+        </testcase>
+        <testcase name="test_post_request" classname="com.example.APITest" time="0.567">
+        </testcase>
+        <testcase name="test_put_request" classname="com.example.APITest" time="0.389">
+        </testcase>
+        <testcase name="test_delete_request" classname="com.example.APITest" time="0.412">
+            <error message="Connection timeout">
+java.net.SocketTimeoutException: Connection timed out after 30 seconds
+    at com.example.APITest.test_delete_request(APITest.java:89)
+            </error>
+        </testcase>
+        <testcase name="test_error_handling" classname="com.example.APITest" time="0.410">
         </testcase>
     </testsuite>
 </testsuites>
