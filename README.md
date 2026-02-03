@@ -89,21 +89,31 @@ The package comes with several pre-built templates to customize your report styl
   <tr>
     <td width="50%" valign="top">
       <h4 align="center">Modern (Default)</h4>
-      <img src="https://github.com/user-attachments/assets/34ca8100-474c-4d16-a526-b3601fffdc04" alt="Modern Report" width="100%" />
+      <img src="https://github.com/user-attachments/assets/1e01da9f-b310-4537-989f-ec92f2eb81e6" alt="Modern Report" width="100%" />
     </td>
     <td width="50%" valign="top">
-      <h4 align="center">Modern Dark</h4>
-      <img src="https://github.com/user-attachments/assets/29ff73b9-7e66-491f-9333-2f71c0ef35dc" alt="Dark Report" width="100%" />
+      <h4 align="center">Dark</h4>
+      <img src="https://github.com/user-attachments/assets/ae7e86d5-beb8-4734-a37f-adb7837da87d" alt="Dark Report" width="100%" />
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
       <h4 align="center">Minimal</h4>
-      <img src="https://github.com/user-attachments/assets/8d3acc33-be63-41c7-92ce-def70d68ee89" alt="Minimal Report" width="100%" />
+      <img src="https://github.com/user-attachments/assets/bea75c2b-dcbb-42c4-a2d4-2712be1ce35f" alt="Minimal Report" width="100%" />
     </td>
     <td width="50%" valign="top">
       <h4 align="center">Legacy</h4>
-      <img src="https://github.com/user-attachments/assets/f6e39403-d864-4c58-bcad-1f7c537b9189" alt="Legacy Report" width="100%" />
+      <img src="https://github.com/user-attachments/assets/ae641be7-4e01-45b1-a3ee-c3b0ccbbb5c2" alt="Legacy Report" width="100%" />
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" valign="top">
+      <h4 align="center">Analytics</h4>
+      <img src="https://github.com/user-attachments/assets/4d4c5423-d3b3-4d75-ac39-a2a40f11f554" alt="Analytics Report - Overview" width="100%" />
+      <img src="https://github.com/user-attachments/assets/8e2d12dc-b127-4e04-ba0b-3f1bed52339a" alt="Analytics Report - Charts" width="100%" />
+      <img src="https://github.com/user-attachments/assets/c740fb80-a619-4233-83cb-801db15ea8e4" alt="Analytics Report - Performance" width="100%" />
+      <img src="https://github.com/user-attachments/assets/a1959c16-1913-408e-aaf9-06a9b4561aa5" alt="Analytics Report - Errors" width="100%" />
+      <img src="https://github.com/user-attachments/assets/4e114064-885f-4d1b-b419-0c9a15bd2f20" alt="Analytics Report - Top Tests" width="100%" />
     </td>
   </tr>
 </table>
