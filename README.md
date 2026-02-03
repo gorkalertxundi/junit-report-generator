@@ -79,7 +79,7 @@ The package comes with several pre-built templates to customize your report styl
 | :--- | :--- | :--- |
 | **modern** | (Default) A clean, colorful dashboard with charts and collapsible sections. | General use, stakeholder reports. |
 | **dark** | A high-contrast dark theme version of the modern dashboard. | Late-night debugging, dark-mode lovers. |
-| **minimal** | A text-heavy, high-density layout with no Javascript or charts. | Large test suites (10k+ tests), slow connections. |
+| **minimal** | A text-heavy, high-density layout with no charts and only minimal inline JavaScript for basic filtering/collapsing. | Large test suites (10k+ tests), slow connections that still allow basic interactivity. |
 | **legacy** | A simple table view similar to older Jenkins reports. | Backward compatibility. |
 | **analytics** | Advanced analytics dashboard with multi-axis charts, performance insights, and interactive filters. | In-depth performance analysis, identifying bottlenecks. |
 
