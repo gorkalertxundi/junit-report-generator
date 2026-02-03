@@ -55,6 +55,12 @@ Examples:
         help="List all available templates and exit"
     )
     
+    parser.add_argument(
+        "--allow-analytics",
+        action="store_true",
+        help="Generate an additional analytics report alongside the main report"
+    )
+    
     args = parser.parse_args()
     
     # Handle --list-templates
@@ -92,9 +98,20 @@ Examples:
         output_path = Path(args.output)
         output_path.write_text(html_content, encoding="utf-8")
         
+        # Generate analytics report if flag is set
+        if args.allow_analytics:
+            print(f"Generating analytics report...")
+            analytics_html = generate_html(report_data, template_name="analytics", title=f"{args.title} - Analytics")
+            
+            # Generate analytics output path (insert -analytics before extension)
+            analytics_path = output_path.parent / f"{output_path.stem}-analytics{output_path.suffix}"
+            analytics_path.write_text(analytics_html, encoding="utf-8")
+        
         # Print summary
         summary = report_data["summary"]
         print(f"\n✓ Report generated successfully: {args.output}")
+        if args.allow_analytics:
+            print(f"✓ Analytics report generated: {analytics_path.name}")
         print(f"\nTest Summary:")
         print(f"  Total:   {summary['total']}")
         print(f"  Passed:  {summary['passed']}")

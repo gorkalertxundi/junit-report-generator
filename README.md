@@ -45,6 +45,12 @@ List available templates:
 junit-html-report-generator --list-templates
 ```
 
+Generating analytics reports (in addition to the main report):
+```bash
+junit-html-report-generator report.xml -o output.html --allow-analytics
+```
+This generates both `output.html` (main report) and `output-analytics.html` (analytics dashboard with charts and filters).
+
 **Python Library**
 You can integrate the generator directly into your Python scripts.
 
@@ -73,8 +79,9 @@ The package comes with several pre-built templates to customize your report styl
 | :--- | :--- | :--- |
 | **modern** | (Default) A clean, colorful dashboard with charts and collapsible sections. | General use, stakeholder reports. |
 | **dark** | A high-contrast dark theme version of the modern dashboard. | Late-night debugging, dark-mode lovers. |
-| **minimal** | A text-heavy, high-density layout with no Javascript or charts. | Large test suites (10k+ tests), slow connections. |
+| **minimal** | A text-heavy, high-density layout with no charts and only minimal inline JavaScript for basic filtering/collapsing. | Large test suites (10k+ tests), slow connections that still allow basic interactivity. |
 | **legacy** | A simple table view similar to older Jenkins reports. | Backward compatibility. |
+| **analytics** | Advanced analytics dashboard with multi-axis charts, performance insights, and interactive filters. | In-depth performance analysis, identifying bottlenecks. |
 
 ### 📸 Template Previews
 
@@ -107,6 +114,15 @@ The generated HTML report includes:
 - Summary Cards: Total tests, passed, failed, skipped, and total duration.
 - Test Cases Table: Sortable list of all test cases with status indicators.
 - Failure Details: Expandable sections showing stack traces and error messages.
+
+### Analytics Dashboard (`--allow-analytics`)
+The analytics report provides advanced insights:
+
+- **Interactive Charts**: Status distribution, test count by class, execution time by class, failure distribution, and pass rate visualization.
+- **Performance Metrics**: Detailed breakdown of test execution by class with averages and statistics.
+- **Error Analysis**: Deduplicated error messages with frequency counts and affected tests.
+- **Top Tests**: Slowest and fastest tests ranked by execution time.
+- **Filterable Sections**: Use "Show top N" filters in Performance by Class and Error Analysis sections to focus on the most relevant data.
 
 ## 🤝 Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
