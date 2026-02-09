@@ -1,6 +1,6 @@
 # JUnit Report Generator
 
-![PyPI - Version](https://img.shields.io/pypi/v/junit-html-report-generator) ![License](https://img.shields.io/pypi/l/junit-html-report-generator) ![Python Version](https://img.shields.io/pypi/pyversions/junit-html-report-generator) [![PyPI Downloads](https://static.pepy.tech/personalized-badge/junit-html-report-generator?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/junit-html-report-generator)
+![PyPI - Version](https://img.shields.io/pypi/v/junit-html-report-generator) ![License](https://img.shields.io/pypi/l/junit-html-report-generator) ![Python Version](https://img.shields.io/pypi/pyversions/junit-html-report-generator) [![PyPI Downloads](https://static.pepy.tech/personalized-badge/junit-html-report-generator?period=total&units=INTERNATIONAL_SYSTEM&left_color=GREY&right_color=MAGENTA&left_text=total+downloads)](https://pepy.tech/projects/junit-html-report-generator) [![PyPI Downloads](https://static.pepy.tech/personalized-badge/junit-html-report-generator?period=monthly&units=INTERNATIONAL_SYSTEM&left_color=GREY&right_color=BLUE&left_text=last+month+downloads)](https://pepy.tech/projects/junit-html-report-generator)
 
 **junit-html-report-generator** is a lightweight, zero-dependency Python tool that converts JUnit XML test reports into human-readable, static HTML dashboards.
 
